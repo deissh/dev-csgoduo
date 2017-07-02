@@ -2,8 +2,8 @@
 
 Данный бот представлен сообществу на доработку.
 
-[![NPM](https://img.shields.io/npm/v/miniprofiler.svg)](https://www.npmjs.com/package/miniprofiler)
-[![Build](https://travis-ci.org/MiniProfiler/node.svg?branch=master)](https://travis-ci.org/MiniProfiler/node)
+[![NodeJS](https://img.shields.io/npm/v/miniprofiler.svg)]
+[![Build](https://travis-ci.org/MiniProfiler/node.svg?branch=master)]
 
 ## Demonstration
 
