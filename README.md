@@ -2,9 +2,6 @@
 
 Данный бот представлен сообществу на доработку.
 
-![NodeJS](https://img.shields.io/npm/v/miniprofiler.svg)
-![Build](https://travis-ci.org/MiniProfiler/node.svg?branch=master)
-
 ## Demonstration
 
 На данном сайте можно увидить его работу (прием и обработка обменов Steam).
