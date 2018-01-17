@@ -1,0 +1,24 @@
+{
+  "name": "dev-csgoduo",
+  "description": "Бот для приема вещей на сайт.",
+  "version": "0.1.0",
+  "maintainers": [
+    {
+      "name": "Deissh",
+      "email": "",
+      "web": "vk.com/keelvel"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/Hatollint/dev-csgoduo"
+    }
+  ],
+  "licenses": [
+    {
+      "name": "Apache License 2.0",
+      "url": "https://github.com/Hatollint/dev-csgoduo/blob/master/LICENSE"
+    }
+  ]
+}
