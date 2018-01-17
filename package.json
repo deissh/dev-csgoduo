@@ -9,6 +9,17 @@
       "web": "vk.com/keelvel"
     }
   ],
+  "dependencies": [
+    {
+      "miniprofiler-http": "^1.0.1",
+      "steam-totp": "^1.4.0",
+      "steamcommunity": "^3.30.7",
+      "mysql": "^2.15.0",
+      "log4js": "^2.4.1",
+      "steam-tradeoffers": "^3.1.0",
+      "async": "^2.6.0"
+    }
+  ],
   "repositories": [
     {
       "type": "git",
