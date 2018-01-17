@@ -1,4 +1,6 @@
 # CS:GO Duo trade bot
+[![Build Status](https://travis-ci.org/Hatollint/dev-csgoduo.svg?branch=master)](https://travis-ci.org/Hatollint/dev-csgoduo)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/518049531227459182b94c0927bf299a)](https://www.codacy.com/app/Hatollint/dev-csgoduo?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Hatollint/dev-csgoduo&amp;utm_campaign=Badge_Grade)
 
 Данный бот представлен сообществу на доработку.
 
