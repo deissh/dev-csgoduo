@@ -24,10 +24,10 @@ $ forever start bot.js [id]
 
 | Name      |Version    |
 |-----------|-----------|
-| `miniprofiler-http` | ![NPM](https://img.shields.io/npm/v/miniprofiler-http.svg)|
-| `steamcommunity` | ![NPM](https://img.shields.io/npm/v/miniprofiler-http.svg)|
-| `steam-totp` | ![NPM](https://img.shields.io/npm/v/miniprofiler-http.svg)|
-| `mysql` | ![NPM](https://img.shields.io/npm/v/miniprofiler-http.svg)|
-| `log4js` | ![NPM](https://img.shields.io/npm/v/miniprofiler-http.svg)|
-| `steam-tradeoffers` | ![NPM](https://img.shields.io/npm/v/miniprofiler-http.svg)|
-| `async` | ![NPM](https://img.shields.io/npm/v/miniprofiler-http.svg)|
+| `miniprofiler-http` | ![NPM](https://img.shields.io/npm/v/miniprofiler.svg)|
+| `steamcommunity` | ![NPM](https://img.shields.io/npm/v/steamcommunity.svg)|
+| `steam-totp` | ![NPM](https://img.shields.io/npm/v/steam-totp.svg)|
+| `mysql` | ![NPM](https://img.shields.io/npm/v/mysql.svg)|
+| `log4js` | ![NPM](https://img.shields.io/npm/v/log4js.svg)|
+| `steam-tradeoffers` | ![NPM](https://img.shields.io/npm/v/steam-tradeoffers.svg)|
+| `async` | ![NPM](https://img.shields.io/npm/v/async.svg)|
