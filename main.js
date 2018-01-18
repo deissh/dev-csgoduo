@@ -330,7 +330,7 @@ query('SELECT * FROM `bots` WHERE `id` = '+pool.escape(nconf.get('bot_id') || 1)
 	community.login(account, login);
 });
 
-//обход гуарда
+//bypass steam guard
 community.on('confKeyNeeded', function(tag, callback) {
     callback(null, time, SteamTotp.getConfirmationKey(account.identity_secret, time(), tag));
 });
