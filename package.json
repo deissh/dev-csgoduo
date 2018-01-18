@@ -1,29 +1,25 @@
 {
   "name": "dev-csgoduo",
   "description": "Бот для приема вещей на сайт.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "maintainers": [
-    {
-      "name": "Deissh",
-      "email": "",
-      "web": "vk.com/keelvel"
-    }
+    "Deissh (vk.com/keelvel)"
   ],
-  "dependencies": [
-    {
-      "miniprofiler-http": "^1.0.1",
-      "steam-totp": "^1.4.0",
-      "steamcommunity": "^3.30.7",
-      "mysql": "^2.15.0",
-      "log4js": "^2.4.1",
-      "steam-tradeoffers": "^3.1.0",
-      "async": "^2.6.0"
-    }
-  ],
+  "dependencies": {
+    "async": "^2.6.0",
+    "chai": "^4.1.2",
+    "express": "^4.16.2",
+    "log4js": "^2.5.1",
+    "miniprofiler-http": "^1.0.1",
+    "mysql": "^2.15.0",
+    "steam-totp": "^2.0.1",
+    "steam-tradeoffers": "^3.1.0",
+    "steamcommunity": "^3.34.0"
+  },
   "repositories": [
     {
       "type": "git",
-      "url": "https://github.com/Hatollint/dev-csgoduo"
+      "url": "git+https://github.com/Hatollint/dev-csgoduo.git"
     }
   ],
   "licenses": [
@@ -31,5 +27,28 @@
       "name": "Apache License 2.0",
       "url": "https://github.com/Hatollint/dev-csgoduo/blob/master/LICENSE"
     }
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hatollint/dev-csgoduo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Hatollint/dev-csgoduo/issues"
+  },
+  "homepage": "https://github.com/Hatollint/dev-csgoduo#readme",
+  "main": "bot.js",
+  "devDependencies": [
+    {
+      "chai": "^3.5.0",
+      "chai-http": "^2.0.1",
+      "mocha": "^2.4.5"
+    }
+  ],
+  "scripts": {
+    "test": "mocha",
+    "start": "node main.js",
+    "deploy": "node main.js --deploy"
+  },
+  "author": "Deissh",
+  "license": "Apache-2.0"
 }
