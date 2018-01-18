@@ -50,5 +50,10 @@
     "deploy": "node main.js --deploy"
   },
   "author": "Deissh",
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }
