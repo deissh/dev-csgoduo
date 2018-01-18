@@ -16,6 +16,7 @@ apt-get install -y nodejs
 
 Installing the necessary programs
 ```bash
+npm install
 npm install forever -g
 ```
 You also need to specify the parameters for connecting to the database.
