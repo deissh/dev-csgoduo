@@ -5,18 +5,17 @@ var log4js = require('log4js');
 var SteamTradeOffers = require('steam-tradeoffers');
 var async = require('async');
 var express = require('express');
+var nconf = require('nconf');
 var app = express();
 
-if (!process.argv[2]){
-	process.argv[2] = 1;
-}
+nconf.file('configs/dev.json');
 
 var pool  = mysql.createPool({
 	connectionLimit : 10,
-	database: '',
-	host: '',
-	user: '',
-	password: ''
+	database: nconf.get('db:database'),
+	host: nconf.get('db:host'),
+	user: nconf.get('db:user'),
+	password: nconf.get('db:password')
 });
 
 var community = new SteamCommunity();
@@ -38,6 +37,88 @@ log4js.configure({
 
 var logger = log4js.getLogger();
 
+function query(sql, callback) {
+	if (typeof callback === 'undefined') {
+		callback = function() {};
+	}
+	pool.getConnection(function(err, connection) {
+		if(err) return callback(err);
+		logger.info('DB connection ID: '+connection.threadId);
+		connection.query(sql, function(err, rows) {
+			if(err) return callback(err);
+			connection.release();
+			return callback(null, rows);
+		});
+	});
+}
+
+function login(err, sessionID, cookies, steamguard) {
+	if(err) {
+		logger.error('Auth error');
+		logger.debug(err);
+		if(err.message == "SteamGuardMobile") {
+			account.twoFactorCode = SteamTotp.generateAuthCode(account.shared_secret);
+			logger.warn('Error in auth: '+account.twoFactorCode);
+			setTimeout(function() {
+				community.login(account, login);
+			}, 5000);
+			return;
+		}
+		process.exit(0);
+	}
+	logger.trace('Sucesfully auth');
+	account.sessionID = sessionID;
+	account.cookies = cookies;
+	community.getWebApiKey('csgo-duo.ru', webApiKey);
+	community.startConfirmationChecker(10000, account.identity_secret);
+}
+
+function webApiKey(err, key) {
+	if(err) {
+		logger.error('Cant make apikey')
+		logger.debug(err);
+		process.exit(0);
+		return;
+	}
+	account.key = key;
+	logger.trace('API key bot '+account.accountName+' '+account.key);
+	offersSetup();
+	community.loggedIn(checkLoggedIn);
+}
+
+function offersSetup() {
+	logger.trace('Loaded steam-tradeoffers');
+	offers.setup({
+		sessionID: account.sessionID,
+		webCookie: account.cookies,
+		APIKey: account.key
+	});
+}
+
+function checkLoggedIn(err, loggedIn, familyView) {
+	if((err) || (!loggedIn)) {
+		logger.error('We arent logged in')
+		process.exit(0);
+	} else {
+		logger.trace('Logged in');
+		account.auth = true;
+	}
+}
+
+function makecode() {
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for(var i=0; i < 5; i++)
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+}
+
+function time() {
+	return parseInt(new Date().getTime()/1000)
+}
+
 //express app and routing
 app.get('/sendTrade/', function (req, res) {
 	var assetids = req.query['assetids'];
@@ -51,7 +132,7 @@ app.get('/sendTrade/', function (req, res) {
 		if(assetids[i] == "") continue;
 		senditems.push({
 			appid: 730,
-			contextid: 2, 
+			contextid: 2,
 			assetid: assetids[i]
 		});
 	}
@@ -125,7 +206,7 @@ app.get('/sendTradeMe/', function (req, res) {
 			res.json({
 				success: false,
 				error: err.toString()
-			});			
+			});
 		} else {
 			var senditems = [];
 			for(var i = 0; i < names.length; i++) {
@@ -133,7 +214,7 @@ app.get('/sendTradeMe/', function (req, res) {
 					if((names[i] == items[a].market_hash_name) && (!items[a].ss)) {
 						senditems.push({
 							appid: 730,
-							contextid: 2, 
+							contextid: 2,
 							assetid: items[a].id
 						});
 						if(senditems.length == names.length-1) break;
@@ -234,7 +315,7 @@ function cancelTrade(offerid) {
 }
 
 // mysql querys
-query('SELECT * FROM `bots` WHERE `id` = '+pool.escape(process.argv[2]), function(err, res) {
+query('SELECT * FROM `bots` WHERE `id` = '+pool.escape(nconf.get('bot_id') || 1), function(err, res) {
 	if((err) || (!res[0])) {
 		logger.error('Cant find account');
 		process.exit(0);
@@ -266,85 +347,3 @@ community.on('newConfirmation', function(confirmation) {
 		logger.trace('Trade sucesfully confirmed');
 	});
 });
-
-function query(sql, callback) {
-	if (typeof callback === 'undefined') {
-		callback = function() {};
-	}
-	pool.getConnection(function(err, connection) {
-		if(err) return callback(err);
-		logger.info('DB connection ID: '+connection.threadId);
-		connection.query(sql, function(err, rows) {
-			if(err) return callback(err);
-			connection.release();
-			return callback(null, rows);
-		});
-	});
-}
-
-function login(err, sessionID, cookies, steamguard) {
-	if(err) {
-		logger.error('Auth error');
-		logger.debug(err);
-		if(err.message == "SteamGuardMobile") {
-			account.twoFactorCode = SteamTotp.generateAuthCode(account.shared_secret);
-			logger.warn('Error in auth: '+account.twoFactorCode);
-			setTimeout(function() {
-				community.login(account, login);
-			}, 5000);
-			return;
-		}
-		process.exit(0);
-	}
-	logger.trace('Sucesfully auth');
-	account.sessionID = sessionID;
-	account.cookies = cookies;
-	community.getWebApiKey('csgo-duo.ru', webApiKey);
-	community.startConfirmationChecker(10000, account.identity_secret);
-}
-
-function webApiKey(err, key) {
-	if(err) {
-		logger.error('Cant make apikey')
-		logger.debug(err);
-		process.exit(0);
-		return;
-	}
-	account.key = key;
-	logger.trace('API key bot '+account.accountName+' '+account.key);
-	offersSetup();
-	community.loggedIn(checkLoggedIn);
-}
-
-function offersSetup() {
-	logger.trace('Loaded steam-tradeoffers');
-	offers.setup({
-		sessionID: account.sessionID,
-		webCookie: account.cookies,
-		APIKey: account.key
-	});
-}
-
-function checkLoggedIn(err, loggedIn, familyView) {
-	if((err) || (!loggedIn)) {
-		logger.error('We arent logged in')
-		process.exit(0);
-	} else {
-		logger.trace('Logged in');
-		account.auth = true;
-	}
-}
-
-function makecode() {
-    var text = "";
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-    for(var i=0; i < 5; i++)
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-    return text;
-}
-
-function time() {
-	return parseInt(new Date().getTime()/1000)
-}
