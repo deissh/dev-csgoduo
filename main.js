@@ -170,7 +170,7 @@ app.get('/sendTrade/', function (req, res) {
 					var names = [];
 					for(var i = 0; i < senditems.length; i++) {
 						for(var a = 0; a < rr.length; a++) {
-							if((senditems[i].assetid == rr[a].id) && (!rr[a].ss)) {
+							if((senditems[i].assetid === rr[a].id) && (!rr[a].ss)) {
 								names.push({market_hash_name: rr[a].market_hash_name, icon_url: rr[a].icon_url});
 								rr[a].ss = 1;
 								continue;
