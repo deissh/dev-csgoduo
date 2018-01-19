@@ -30,7 +30,7 @@
   "homepage": "https://github.com/Hatollint/dev-csgoduo#readme",
   "main": "bot.js",
   "scripts": {
-    "test": "mocha",
+    "test": "./node_modules/jshint/bin/jshint main.js",
     "start": "node main.js",
     "deploy": "node main.js --deploy"
   },
@@ -41,13 +41,8 @@
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
-  "directories": {
-    "test": "test"
-  },
   "devDependencies": {
-    "chai": "^4.1.2",
-    "chai-http": "^3.0.0",
     "cz-conventional-changelog": "^2.1.0",
-    "mocha": "^5.0.0"
+    "jshint": "^2.6.0"
   }
 }
