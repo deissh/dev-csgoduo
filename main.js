@@ -60,7 +60,7 @@ function login(err, sessionID, cookies, steamguard) {
 	if(err) {
 		logger.error('Auth error');
 		logger.debug(err);
-		if(err.message == "SteamGuardMobile") {
+		if(err.message === "SteamGuardMobile") {
 			account.twoFactorCode = SteamTotp.generateAuthCode(account.shared_secret);
 			logger.warn('Error in auth: '+account.twoFactorCode);
 			setTimeout(function() {
@@ -101,7 +101,7 @@ function offersSetup() {
 
 function checkLoggedIn(err, loggedIn, familyView) {
 	if((err) || (!loggedIn)) {
-		logger.error('We arent logged in')
+		logger.error('We arent logged in');
 		process.exit(0);
 	} else {
 		logger.trace('Logged in');
@@ -120,7 +120,7 @@ function makecode() {
 }
 
 function time() {
-	return parseInt(new Date().getTime()/1000)
+	return parseInt(new Date().getTime()/1000);
 }
 
 //express app and routing
@@ -133,7 +133,7 @@ app.get('/sendTrade/', function (req, res) {
 	var steamid = req.query['steamid'];
 	var senditems = [];
 	for(var i = 0; i < assetids.length; i++) {
-		if(assetids[i] == "") continue;
+		if(assetids[i] === "") continue;
 		senditems.push({
 			appid: 730,
 			contextid: 2,
@@ -215,7 +215,7 @@ app.get('/sendTradeMe/', function (req, res) {
 			var senditems = [];
 			for(var i = 0; i < names.length; i++) {
 				for(var a = 0; a < items.length; a++) {
-					if((names[i] == items[a].market_hash_name) && (!items[a].ss)) {
+					if((names[i] === items[a].market_hash_name) && (!items[a].ss)) {
 						senditems.push({
 							appid: 730,
 							contextid: 2,
@@ -227,7 +227,7 @@ app.get('/sendTradeMe/', function (req, res) {
 					}
 					if(senditems.length == names.length-1) break;
 				}
-			};
+			}
 			var code = makecode();
 			console.log(partner, token, checksum, names, senditems);
 			offers.makeOffer({
@@ -271,7 +271,7 @@ app.get('/checkTrade/', function (req, res) {
 				error: err.toString()
 			});
 		} else {
-			if(trade.response.offer.escrow_end_date == 0){
+			if(trade.response.offer.escrow_end_date === 0){
 				logger.debug(trade);
 				if(trade.response.offer.trade_offer_state == 3) {
 					res.json({
