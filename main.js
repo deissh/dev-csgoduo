@@ -1,3 +1,7 @@
+/*jshint -W069 */
+/*Disable Warning Justification:
+    Using bracket notation so Google Closure Compiler 
+    ADVANCED_OPTIMIZATIONS will keep the original property names. */
 var SteamCommunity = require('steamcommunity');
 var SteamTotp = require('steam-totp');
 var mysql = require('mysql');
@@ -75,7 +79,7 @@ function login(err, sessionID, cookies, steamguard) {
 
 function webApiKey(err, key) {
 	if(err) {
-		logger.error('Cant make apikey')
+		logger.error('Cant make apikey');
 		logger.debug(err);
 		process.exit(0);
 		return;
@@ -347,3 +351,4 @@ community.on('newConfirmation', function(confirmation) {
 		logger.trace('Trade sucesfully confirmed');
 	});
 });
+/*jshint +W069 */
