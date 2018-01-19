@@ -21,17 +21,7 @@ Installing the necessary programs
 npm install
 npm install forever -g
 ```
-You also need to specify the parameters for connecting to the database.
-Lines 14 to 20 on main.js.
-```javascript
-var pool  = mysql.createPool({
-	connectionLimit : 10,
-	database: '',
-	host: '',
-	user: '',
-	password: ''
-});
-```
+You also need to configure the config files in /configs.
 
 Starting the bot
 ```bash
